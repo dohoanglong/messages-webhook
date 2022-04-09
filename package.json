@@ -4,7 +4,8 @@
   "description": "messages management webhook",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec npx babel-node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,13 @@
   },
   "homepage": "https://github.com/dohoanglong/messages-webhook#readme",
   "dependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
     "body-parser": "^1.20.0",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
   }
 }
