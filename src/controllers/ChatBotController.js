@@ -140,10 +140,10 @@ async function getUserInfo(sender_psid) {
     "method": "GET",
   }, (err, res, body) => {
     if (!err) {
-      let response = JSON.parse(body);
-      let userName = `${response.first_name} ${response.last_name}`;
-      userInfo = {...response, userName};
-      console.error("user info:" + response);
+      // let response = JSON.parse(body);
+      let userName = `${body.first_name} ${body.last_name}`;
+      userInfo = {...body, userName};
+      console.error("user info:" + body);
     } else {
       console.error("Unable to retrieve user info:" + err);
     }
