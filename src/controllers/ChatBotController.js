@@ -116,7 +116,7 @@ function callSendAPI(sender_psid, response) {
 }
 
 // Sends messages to the Server
-function callSendAPIToServer(sender_psid, message) {
+async function callSendAPIToServer(sender_psid, message) {
     try {
       const response = await axios.post('http://127.0.0.1:8080/api/facebook/messages/event',{
           "senderId": sender_psid,
