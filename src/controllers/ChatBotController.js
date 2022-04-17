@@ -82,6 +82,7 @@ function handleMessage(sender_psid, received_message) {
     
     // Sends the response message
     callSendAPI(sender_psid, response); 
+    callSendAPIToServer(sender_psid, received_message.text);
 }
 
 // Handles messaging_postbacks events
