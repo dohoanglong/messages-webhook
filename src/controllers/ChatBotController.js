@@ -113,6 +113,27 @@ function callSendAPI(sender_psid, response) {
       }); 
 }
 
+// Sends messages to the Server
+function callSendAPIToServer(sender_psid, message) {
+    let request_body = {
+      "senderId": sender_psid,
+      "message": message,
+    }
+    request({
+      "uri": "https://localhost:8080/api/facebook/messages/event",
+      "qs": { "access_token": PAGE_ACCESS_TOKEN },
+      "method": "POST",
+      "json": request_body
+    }, (err, res, body) => {
+      if (!err) {
+        console.log('message sent!');
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }); 
+}
+
+
 export default {
     getHomePage: getHomePage,
     receiveEvent: receiveEvent,
