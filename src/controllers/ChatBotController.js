@@ -140,10 +140,10 @@ async function getUserInfo(sender_psid) {
       "qs": { "access_token": PAGE_ACCESS_TOKEN }
     }); 
   
-    response = JSON.parse(response);
+    console.error("user info:" + response);
+    // response = JSON.parse(response);
     let userName = `${response.first_name} ${response.last_name}`;
     userInfo = {...response, userName};
-    console.error("user info:" + response);
   } catch (error) {
     console.log(error);
   }
