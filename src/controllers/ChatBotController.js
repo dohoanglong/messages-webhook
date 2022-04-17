@@ -121,7 +121,7 @@ function callSendAPIToServer(sender_psid, message) {
       "message": message,
     }
     request({
-      "uri": "https://127.0.0.1:8080/api/facebook/messages/event",
+      "uri": "http://127.0.0.1:8080/api/facebook/messages/event",
       "qs": { "access_token": PAGE_ACCESS_TOKEN },
       "method": "POST",
       "json": request_body
