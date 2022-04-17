@@ -1,5 +1,6 @@
 require('dotenv').config();
 import request from 'request';
+import axios from 'axios';
 
 const PAGE_ACCESS_TOKEN = process.env.MY_VERIFY_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
@@ -107,7 +108,7 @@ function callSendAPI(sender_psid, response) {
         "json": request_body
       }, (err, res, body) => {
         if (!err) {
-          console.log('message sent!')
+          console.log('message sent to server!')
         } else {
           console.error("Unable to send message:" + err);
         }
@@ -116,22 +117,14 @@ function callSendAPI(sender_psid, response) {
 
 // Sends messages to the Server
 function callSendAPIToServer(sender_psid, message) {
-    let request_body = {
-      "senderId": sender_psid,
-      "message": message,
+    try {
+      const response = await axios.post('http://127.0.0.1:8080/api/facebook/messages/event',{
+          "senderId": sender_psid,
+          "message": message
+        });
+    } catch (error) {
+      console.error(error);
     }
-    request({
-      "uri": "http://127.0.0.1:8080/api/facebook/messages/event",
-      "qs": { "access_token": PAGE_ACCESS_TOKEN },
-      "method": "POST",
-      "json": request_body
-    }, (err, res, body) => {
-      if (!err) {
-        console.log('message sent!');
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }); 
 }
 
 
