@@ -141,7 +141,7 @@ async function getUserInfo(sender_psid) {
       if (!err) {
         let response = JSON.parse(body);
         let user_name = `${response.first_name} ${response.last_name}`;
-        let userInfo = { user_name, profile_pic.profile_pic, profile_pic.id };
+        let userInfo = { user_name, response.profile_pic, response.id };
         console.error("user info:" + response);
         resolve(userInfo);
       } else {
