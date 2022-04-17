@@ -132,22 +132,23 @@ function callSendAPIToServer(webhook_event) {
 }
 
 async function getUserInfo(sender_psid) {
-  let userInfo;
-
-  try {
-    let response = await request.get({
-      "url": `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic`,
-      "qs": { "access_token": PAGE_ACCESS_TOKEN }
+  return new Promise(function (resolve, reject) {
+    request({
+      "uri": `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic`,
+      "qs": { "access_token": PAGE_ACCESS_TOKEN },
+      "method": "GET",
+    }, (err, res, body) => {
+      if (!err) {
+        let response = JSON.parse(body);
+        let userName = `${response.first_name} ${response.last_name}`;
+        let userInfo = {...response, userName};
+        console.error("user info:" + response);
+        resolve(userInfo);
+      } else {
+        reject(error);
+      }
     }); 
-  
-    console.error("user info:" + response);
-    // response = JSON.parse(response);
-    let userName = `${response.first_name} ${response.last_name}`;
-    userInfo = {...response, userName};
-  } catch (error) {
-    console.log(error);
-  }
-  return userInfo;
+  });
 }
 
 
