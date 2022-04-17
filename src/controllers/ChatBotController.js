@@ -100,13 +100,13 @@ function callSendAPI(sender_psid, response) {
 }
 
 // Sends messages to the Server
-function callSendAPIToServer(webhook_event) {
+async function callSendAPIToServer(webhook_event) {
     const sender_psid = webhook_event.sender.id;
     const recipient_psid = webhook_event.recipient.id;
     const time_of_message = webhook_event.timestamp;
-    const message = webhook_event.message;
+    const message = webhook_event.message.text;
 
-    const senderInfo = getUserInfo(sender_psid);
+    const senderInfo = await getUserInfo(sender_psid);
 
     const request_body = {
       "senderId": sender_psid,
