@@ -21,16 +21,12 @@ const receiveEvent = (req, res) => {
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
 
-            // Get the sender PSID
-            let sender_psid = webhook_event.sender.id;
-            console.log('Sender PSID: ' + sender_psid);
-
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
-                handleMessage(sender_psid, webhook_event.message);
+                handleMessage(webhook_event);
             } else if (webhook_event.postback) {
-                handlePostback(sender_psid, webhook_event.postback);
+                handlePostback(webhook_event);
             }
         });
 
@@ -68,25 +64,14 @@ const verifyWebhook = (req, res) => {
     }
 }
 
-function handleMessage(sender_psid, received_message) {
-    let response;
-
-    // Check if the message contains text
-    if (received_message.text) {    
-  
-      // Create the payload for a basic text message
-      response = {
-        "text": `You sent the message: "${received_message.text}". Now send me an image!`
-      }
-    }  
-    
+function handleMessage(webhook_event) {
     // Sends the response message
-    callSendAPI(sender_psid, response); 
-    callSendAPIToServer(sender_psid, received_message.text);
+    // callSendAPI(sender_psid, response); 
+    callSendAPIToServer(webhook_event);
 }
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+function handlePostback(webhook_event) {
 
 }
 
@@ -115,11 +100,23 @@ function callSendAPI(sender_psid, response) {
 }
 
 // Sends messages to the Server
-function callSendAPIToServer(sender_psid, message) {
-    let request_body = {
+function callSendAPIToServer(webhook_event) {
+    const sender_psid = webhook_event.sender.id;
+    const recipient_psid = webhook_event.recipient.id;
+    const time_of_message = webhook_event.timestamp;
+    const message = webhook_event.message;
+
+    const senderInfo = getUserInfo(sender_psid);
+
+    const request_body = {
       "senderId": sender_psid,
+      "recipientId": recipient_psid,
       "message": message,
+      "timeOfMessage": time_of_message,
+      "senderInfo": senderInfo
     }
+
+
     request({
       "uri": "https://tender-monkey-12.loca.lt/api/facebook/messages/event",
       "qs": { "access_token": PAGE_ACCESS_TOKEN },
@@ -132,6 +129,27 @@ function callSendAPIToServer(sender_psid, message) {
         console.error("Unable to send message:" + err);
       }
     }); 
+}
+
+async function getUserInfo(sender_psid) {
+  let userInfo;
+
+  await request({
+    "uri": `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic`,
+    "qs": { "access_token": PAGE_ACCESS_TOKEN },
+    "method": "GET",
+  }, (err, res, body) => {
+    if (!err) {
+      let response = JSON.parse(res);
+      let userName = `${response.first_name} ${response.last_name}`;
+      userInfo = {...res, userName};
+      console.log('message sent to localhost server!')
+    } else {
+      console.error("Unable to send message:" + err);
+    }
+  }); 
+
+  return userInfo;
 }
 
 
