@@ -118,7 +118,7 @@ async function callSendAPIToServer(webhook_event) {
 
 
   request({
-    "uri": "https://tender-monkey-12.loca.lt/api/facebook/messages/event",
+    "uri": "https://thin-tiger-16.loca.lt/api/facebook/messages/event",
     "qs": { "access_token": PAGE_ACCESS_TOKEN },
     "method": "POST",
     "json": request_body
