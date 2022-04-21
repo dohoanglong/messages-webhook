@@ -106,17 +106,23 @@ async function callSendAPIToServer(webhook_event) {
   const sender_psid = webhook_event.sender.id;
   const recipient_psid = webhook_event.recipient.id;
   const time_of_message = webhook_event.timestamp;
-  const message = webhook_event.message.text;
+  const message = webhook_event.message;
+  var attachments = message.attachments;
+
 
   const senderInfo = await getUserInfo(sender_psid);
 
   const request_body = {
     "senderId": sender_psid,
     "recipientId": recipient_psid,
-    "message": message,
+    "message": message.text,
     "timeOfMessage": time_of_message,
     "senderInfo": senderInfo
   }
+
+  if(attachments) {
+    request_body.attachments = attachments;
+  };
 
 
   request({
