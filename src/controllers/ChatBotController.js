@@ -18,8 +18,9 @@ const receiveEvent = (req, res) => {
     body.entry.forEach(function (entry) {
 
       // Gets the body of the webhook event
+      console.log(entry);
       let webhook_event = entry.messaging[0];
-      console.log(webhook_event);
+      // console.log(webhook_event);
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
