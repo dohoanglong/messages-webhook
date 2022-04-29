@@ -79,7 +79,7 @@ function handlePostback(webhook_event) {
 
 
 // Sends response messages via the Send API
-function callSendAPI(req, res) {
+function callSendAPI(req, response) {
   // Send the HTTP request to the Messenger Platform
   console.log(req.body)
   request({
@@ -90,10 +90,10 @@ function callSendAPI(req, res) {
   }, (err, res, body) => {
     if (!err) {
       console.log('sent msg successfully!')
-      res.status(200).send(res)
+      response.status(200).send(res)
     } else {
       console.error("Unable to send message:" + err);
-      res.status(200).send(res)
+      response.status(200).send(res)
     }
   });
 }
