@@ -7,8 +7,9 @@ const web = (app) => {
     router.get('/',ChatBotController.getHomePage)
 
     // Creates the endpoint for our webhook 
-    app.post('/webhook', ChatBotController.receiveEvent);
     app.get('/webhook', ChatBotController.verifyWebhook);
+    app.post('/webhook', ChatBotController.receiveEvent);
+    app.post('/callSendAPI', ChatBotController.callSendAPI);
 
     return app.use('/', router);
 };

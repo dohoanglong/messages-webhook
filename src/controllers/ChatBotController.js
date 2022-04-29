@@ -77,21 +77,16 @@ function handlePostback(webhook_event) {
 
 }
 
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-  let request_body = {
-    "recipient": {
-      "id": sender_psid
-    },
-    "message": response
-  }
 
+// Sends response messages via the Send API
+function callSendAPI(req, res) {
   // Send the HTTP request to the Messenger Platform
+  console.log(req.body)
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN },
     "method": "POST",
-    "json": request_body
+    "json": req.body
   }, (err, res, body) => {
     if (!err) {
       console.log('message sent to localhost server!')
@@ -120,7 +115,7 @@ async function callSendAPIToServer(webhook_event) {
     "senderInfo": senderInfo
   }
 
-  if(attachments) {
+  if (attachments) {
     request_body.attachments = attachments;
   };
 
@@ -165,6 +160,7 @@ async function getUserInfo(sender_psid) {
 export default {
   getHomePage: getHomePage,
   receiveEvent: receiveEvent,
-  verifyWebhook: verifyWebhook
+  verifyWebhook: verifyWebhook,
+
 }
 
