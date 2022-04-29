@@ -89,7 +89,7 @@ function callSendAPI(req, res) {
     "json": req.body
   }, (err, res, body) => {
     if (!err) {
-      console.log('message sent to localhost server!')
+      console.log('sent msg successfully!')
     } else {
       console.error("Unable to send message:" + err);
     }
