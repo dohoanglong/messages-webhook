@@ -89,8 +89,8 @@ const callSendAPI = (req, response) => {
     "json": req.body
   }, (err, res, body) => {
     if (!err) {
-      console.log('sent msg successfully!'+ JSON.stringify(res))
-      response.status(200).send(res)
+      console.log('sent msg successfully!'+ JSON.stringify(body))
+      response.status(200).send(body)
     } else {
       console.error("Unable to send message:" + err);
       response.status(200).send(res)
