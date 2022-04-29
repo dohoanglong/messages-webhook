@@ -81,7 +81,7 @@ function handlePostback(webhook_event) {
 // Sends response messages via the Send API
 const callSendAPI = (req, response) => {
   // Send the HTTP request to the Messenger Platform
-  console.log("body:" +req.body)
+  console.log(JSON.stringify(req.body))
   request({
     "uri": "https://graph.facebook.com/v2.6/me/messages",
     "qs": { "access_token": PAGE_ACCESS_TOKEN },
@@ -89,7 +89,7 @@ const callSendAPI = (req, response) => {
     "json": req.body
   }, (err, res, body) => {
     if (!err) {
-      console.log('sent msg successfully!'+ res)
+      console.log('sent msg successfully!'+ JSON.stringify(res))
       response.status(200).send(res)
     } else {
       console.error("Unable to send message:" + err);
