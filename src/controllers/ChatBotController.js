@@ -161,6 +161,6 @@ export default {
   getHomePage: getHomePage,
   receiveEvent: receiveEvent,
   verifyWebhook: verifyWebhook,
-
+  callSendAPI: callSendAPI
 }
 
