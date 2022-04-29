@@ -90,8 +90,10 @@ function callSendAPI(req, res) {
   }, (err, res, body) => {
     if (!err) {
       console.log('sent msg successfully!')
+      res.status(200).send(res)
     } else {
       console.error("Unable to send message:" + err);
+      res.status(200).send(res)
     }
   });
 }
